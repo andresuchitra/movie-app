@@ -12,7 +12,7 @@
           <a class="page-link" href="#" tabindex="-1" aria-disabled="true" v-if="currentPage > 1">Previous</a>
         </li>
         <div v-if="totalPages <= 3" class="d-flex">
-          <PageItem v-for="(page, id) in totalPages" :key="id" :page="page" @goToPage="goToPage" />
+          <PageItem v-for="(page, id) in pageList" :key="id" :page="page" @goToPage="goToPage" />
         </div>
         <div v-else class="d-flex">
           <PageItem v-for="(page, id) in 3" :key="id" :page="page" @goToPage="goToPage" />
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       searchKey: '',
+      pageList: [1,2,3],
       url: '',
       list: [],
       currentPage: 1,
@@ -51,10 +52,18 @@ export default {
     this.getMovies()
   },
   methods: {
+    updatePageList(next) {
+      this.pageList = [next, next + 1, next + 2]
+      console.log(this.pageList);
+    },
     goToNextPage() {
-      this.goToPage(Number(this.currentPage) + 1);
+      let nextPage = Number(this.currentPage) + 1
+      this.updatePageList(nextPage);
+      this.goToPage(nextPage);
     },
     goToPage(pageTo) {
+      this.updatePageList(Number(pageTo));
+
       api.get(this.url + `&page=${pageTo}`)
         .then(({ data }) => {
           console.log(data);
