@@ -47,6 +47,7 @@ export default {
     }
   },
   mounted() {
+    this.url = '/?Title='
     this.getMovies()
   },
   methods: {
@@ -64,10 +65,11 @@ export default {
     },
     clear() {
       this.url = ''
+      this.searchKey = ''
       this.getMovies();
     },
     getMovies() {
-      api.get()
+      api.get(this.url)
         .then(({ data }) => {
           this.list = data.data;
           this.currentPage = data.page
