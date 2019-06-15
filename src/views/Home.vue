@@ -16,7 +16,7 @@
         </div>
         <div v-else class="d-flex">
           <PageItem v-for="(page, id) in 3" :key="id" :page="page" @goToPage="goToPage" />
-          <PageItem v-if="totalPages > 3" :page="'Next'" />
+          <PageItem v-if="totalPages > 3" :page="'Next'" @goToPage="goToNextPage" />
         </div>
         
       </ul>
@@ -51,6 +51,9 @@ export default {
     this.getMovies()
   },
   methods: {
+    goToNextPage() {
+      this.goToPage(Number(this.currentPage) + 1);
+    },
     goToPage(pageTo) {
       api.get(this.url + `&page=${pageTo}`)
         .then(({ data }) => {
@@ -64,7 +67,7 @@ export default {
         })
     },
     clear() {
-      this.url = ''
+      this.url = '/?Title='
       this.searchKey = ''
       this.getMovies();
     },
