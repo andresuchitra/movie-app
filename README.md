@@ -1,5 +1,9 @@
 # movie-app
 
+## DEMO
+[Movie App Demo in VueJS + 3rd Party API](https://movie-review-57270.firebaseapp.com/)
+
+
 ## Project setup
 ```
 npm install
